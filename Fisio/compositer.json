@@ -1,0 +1,880 @@
+{
+    " $ schema " : " http://json-schema.org/draft-04/schema# " ,
+    " name " : " Package " ,
+    " type " : " object " ,
+    " AdditionalProperties " : false ,
+    " required " : [ " name " , " description " ],
+    " properties " : {
+        " nome " : {
+            " type " : " string " ,
+            " description " : " Nome do pacote, incluindo o prefixo 'vendor-name /'. "
+        }
+        " type " : {
+            " description " : " Tipo de pacote, 'biblioteca' para pacotes comuns, 'composer-plugin' para plugins, 'metapackage' para pacotes vazios ou um tipo personalizado ([a-z0-9 -] +) definido por qualquer projeto este pacote se aplica a. " ,
+            " type " : " string " ,
+            " padrão " : " ^ [a-z0-9 -] + $ "
+        }
+        " target-dir " : {
+            " description " : " DEPRECATED: Força o pacote a ser instalado no caminho do subdiretório especificado. É usado para carregar automaticamente os pacotes PSR-0 que não contêm o caminho completo. Use barras para compatibilidade entre plataformas. " ,
+            " type " : " string "
+        }
+        " description " : {
+            " type " : " string " ,
+            " description " : " Descrição curta do pacote. "
+        }
+        " keywords " : {
+            " type " : " array " ,
+            " items " : {
+                " type " : " string " ,
+                " description " : " Uma tag / palavra-chave à qual este pacote se refere. "
+            }
+        }
+        " página inicial " : {
+            " type " : " string " ,
+            " description " : " URL da página inicial do projeto. " ,
+            " formato " : " uri "
+        }
+        " leia-me " : {
+            " type " : " string " ,
+            " description " : " Caminho relativo para o documento leia-me. "
+        }
+        " version " : {
+            " type " : " string " ,
+            " description " : " Versão do pacote, consulte https://getcomposer.org/doc/04-schema.md#version para obter mais informações sobre esquemas válidos. " ,
+            " padrão " : " ^ v? \\ d + ((( \\ . \\ d +)? \\ . \\ d +)? \\ . \\ d +)? | ^ dev- "
+        }
+        " time " : {
+            " type " : " string " ,
+            " description " : " Data de lançamento do pacote, no formato 'AAAA-MM-DD', 'AAAA-MM-DD HH: MM: SS' ou 'AAAA-MM-DDTHH: MM: SSZ'. "
+        }
+        " licença " : {
+            " type " : [ " string " , " array " ],
+            " description " : " Nome da licença. Ou uma matriz de nomes de licenças. "
+        }
+        " autores " : {
+            " $ ref " : " # / definições / autores "
+        }
+        " require " : {
+            " type " : " object " ,
+            " description " : " Este é um hash de nome do pacote (chaves) e restrições de versão (valores) necessários para executar este pacote. " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " substituir " : {
+            " type " : " object " ,
+            " description " : " Este é um hash de nome do pacote (chaves) e restrições de versão (valores) que podem ser substituídos por este pacote. " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " conflito " : {
+            " type " : " object " ,
+            " description " : " Este é um hash de nome do pacote (chaves) e restrições de versão (valores) que conflitam com este pacote. " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " forneça " : {
+            " type " : " object " ,
+            " description " : " Este é um hash de nome do pacote (chaves) e restrições de versão (valores) que este pacote fornece além do nome do pacote. " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " require-dev " : {
+            " type " : " object " ,
+            " description " : " Este é um hash de nome do pacote (chaves) e restrições de versão (valores) que este pacote requer para desenvolvê-lo (ferramentas de teste e outras). " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " sugerir " : {
+            " type " : " object " ,
+            " description " : " Este é um hash de nome do pacote (chaves) e descrições (valores) que este pacote sugere que funcione bem com ele (isso será sugerido ao usuário durante a instalação). " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " config " : {
+            " type " : " object " ,
+            " description " : " Opções do compositor. " ,
+            " properties " : {
+                " tempo limite do processo " : {
+                    " type " : " integer " ,
+                    " description " : " O tempo limite em segundos para execuções de processos, o padrão é 300 (5 minutos). "
+                }
+                " use-include-path " : {
+                    " type " : " boolean " ,
+                    " description " : " Se verdadeiro, o carregador automático do Composer também procurará classes no caminho de inclusão do PHP. "
+                }
+                " instalação preferencial " : {
+                    " type " : [ " string " , " object " ],
+                    " description " : " O método de instalação que o Composer prefere usar, o padrão é auto e pode ser qualquer um de source, dist, auto ou um hash de { \" padrão \ " : \" preferência \ " }. "
+                }
+                " notificar na instalação " : {
+                    " type " : " boolean " ,
+                    " description " : "O Composer permite que os repositórios definam uma URL de notificação, para que sejam notificados sempre que um pacote desse repositório for instalado. Esta opção permite desativar esse comportamento, o padrão é true. "
+                }
+                " protocolos github " : {
+                    " type " : " array " ,
+                    " description " : " Uma lista de protocolos a serem usados ??nos clones do github.com, em ordem de prioridade, assume como padrão [ \" git \ " , \" https \ " , \" http \ " ]. " ,
+                    " items " : {
+                        " type " : " string "
+                    }
+                }
+                " github-oauth " : {
+                    " type " : " object " ,
+                    " description " : " Um hash de nome de domínio => tokens de API do github, normalmente { \" github.com \ " : \" <token> \ " }. " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " gitlab-oauth " : {
+                    " type " : " object " ,
+                    " description " : " Um hash de nome de domínio => tokens da API do gitlab, normalmente { \" gitlab.com \ " : \" <token> \ " }. " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " gitlab-token " : {
+                    " type " : " object " ,
+                    " description " : " Um hash de nome de domínio => tokens particulares do gitlab, normalmente { \" gitlab.com \ " : \" <token> \ " }. " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " portador " : {
+                    " type " : " object " ,
+                    " description " : " Um hash do nome de domínio => token de autenticação do portador, por exemplo { \" example.com \ " : \" <token> \ " }. " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " disable-tls " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é` false`. Se definido como true, todos os URLs HTTPS serão tentados com HTTP e nenhuma criptografia no nível da rede será executada. Habilitar esse é um risco à segurança e NÃO é recomendado. A melhor maneira é habilitar o extensão php_openssl no php.ini. "
+                }
+                " http seguro " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é" true ". Se definido como true, apenas é possível fazer o download de URLs HTTPS via Composer. Se você realmente precisa de acesso HTTP a algo, pode desativá-lo, mas usando \" Let's Encrypt \ " para obter um certificado SSL gratuito geralmente é uma alternativa melhor " .
+                }
+                " cafile " : {
+                    " type " : " string " ,
+                    " description " : " Uma maneira de definir o caminho para o arquivo CA openssl. No PHP 5.6+, você deve configurá-lo via openssl.cafile no php.ini, embora o PHP 5.6+ possa detectar o arquivo CA do sistema automaticamente. "
+                }
+                " capath " : {
+                    " type " : " string " ,
+                    " description " : " Se cafile não for especificado ou se o certificado não for encontrado, o diretório apontado por capath será procurado por um certificado adequado. capath deve ser um diretório de certificado com hash corretamente. "
+                }
+                " http-basic " : {
+                    " type " : " object " ,
+                    " description " : " Um hash de nome de domínio => { \" nome de usuário \ " : \" ... \ " , \" senha \ " : \" ... \ " }. " ,
+                    " additionalProperties " : {
+                        " type " : " object " ,
+                        " required " : [ " username " , " password " ],
+                        " properties " : {
+                            " nome de usuário " : {
+                                " type " : " string " ,
+                                " description " : " O nome de usuário usado para autenticação HTTP básica "
+                            }
+                            " senha " : {
+                                " type " : " string " ,
+                                " description " : " A senha usada para autenticação HTTP Basic "
+                            }
+                        }
+                    }
+                }
+                " store-auths " : {
+                    " type " : [ " string " , " boolean " ],
+                    " description " : " O que fazer depois de solicitar a autenticação, um dos seguintes: true (armazenar), false (não armazenar) ou \" prompt "" (perguntar todas as vezes), o padrão é solicitar. "
+                }
+                " plataforma " : {
+                    " type " : " object " ,
+                    " description " : " Este é um hash do nome do pacote (chaves) e versão (valores) que serão usados ??para zombar dos pacotes da plataforma nesta máquina. " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " vendor-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que todos os pacotes estão instalados, o padrão é \" vendor \ " . "
+                }
+                " bin-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que todos os binários estão vinculados, o padrão é \" vendor / bin \ " . "
+                }
+                " data-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que os arquivos farmacêuticos antigos estão armazenados, o padrão é \" $ home \ ", exceto nos unixes compatíveis com o XDG Base Directory. "
+                }
+                " cache-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que todos os caches estão localizados, assume o padrão \" ~ / .composer / cache \ " em * nix e \" % LOCALAPPDATA% \\ Composer \ " nas janelas. "
+                }
+                " cache-files-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que os arquivos (downloads zip) são armazenados em cache, o padrão é \" {$ cache-dir} / files \ " . "
+                }
+                " cache-repo-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que o repo (clones git / hg repo) está armazenado em cache, o padrão é \" {$ cache-dir} / repo \ " . "
+                }
+                " cache-vcs-dir " : {
+                    " type " : " string " ,
+                    " description " : " O local em que as informações do vcs (clones do Git, chamadas da API do Github etc. etc. ao ler os repositórios do vcs) são armazenadas em cache, o padrão é \" {$ cache-dir} / vcs \ " . "
+                }
+                " cache-ttl " : {
+                    " type " : " integer " ,
+                    " description " : " O tempo de vida padrão do cache padrão é 15552000 (6 meses). "
+                }
+                " cache-files-ttl " : {
+                    " type " : " integer " ,
+                    " description " : " O tempo de vida útil dos arquivos em cache é padronizado com o valor de cache-ttl. "
+                }
+                " cache-files-maxsize " : {
+                    " type " : [ " string " , " integer " ],
+                    " description " : " O tamanho máximo do cache para os arquivos, o padrão é \" 300MiB \ " . "
+                }
+                " bin-compat " : {
+                    " enum " : [ " auto " , " full " ],
+                    " description " : " A compatibilidade dos binários é padronizada como \" auto \ " (adivinhada automaticamente) e pode ser \" completa \ " (compatível com os sistemas baseados em Windows e Unix). "
+                }
+                " descarte-alterações " : {
+                    " type " : [ " string " , " boolean " ],
+                    " description " : " O estilo padrão de manipulação de atualizações sujas, o padrão é false e pode ser verdadeiro, falso ou \" stash \ " . "
+                }
+                " autoloader-suffix " : {
+                    " type " : " string " ,
+                    " description " : " Cadeia de caracteres opcional a ser usada como sufixo para o carregador automático do Composer gerado. Quando nulo, será gerado um aleatório. "
+                }
+                " optimize-autoloader " : {
+                    " type " : " boolean " ,
+                    " description " : " Sempre otimize ao descarregar o carregador automático. "
+                }
+                " prepend-autoloader " : {
+                    " type " : " boolean " ,
+                    " description " : " Se false, o carregador automático do compositor não será anexado aos carregadores automáticos existentes, o padrão será true. "
+                }
+                " classmap-authoritative " : {
+                    " type " : " boolean " ,
+                    " description " : " Se true, o carregador automático do compositor não examinará o sistema de arquivos em busca de classes que não foram encontradas no mapa de classes, o padrão é false. "
+                }
+                " apcu-autoloader " : {
+                    " type " : " boolean " ,
+                    " description " : " Se verdadeiro, o carregador automático do Composer verificará o APCu e o usará para armazenar em cache as classes encontradas / não encontradas quando a extensão estiver ativada, o padrão será false. "
+                }
+                " github-domains " : {
+                    " type " : " array " ,
+                    " description " : " Uma lista de domínios a serem usados ??no modo github. Isso é usado nas configurações do GitHub Enterprise, cujo padrão é [ \" github.com \ " ]. " ,
+                    " items " : {
+                        " type " : " string "
+                    }
+                }
+                " github-expose-hostname " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é true. Se definido como false, os tokens OAuth criados para acessar a API do github terão uma data em vez do nome do host da máquina. "
+                }
+                " gitlab-domains " : {
+                    " type " : " array " ,
+                    " description " : " Uma lista de domínios a serem usados ??no modo gitlab. Isso é usado para configurações personalizadas do GitLab, o padrão é [ \" gitlab.com \ " ]. " ,
+                    " items " : {
+                        " type " : " string "
+                    }
+                }
+                " use-github-api " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é true. Se definido como false, desativa globalmente o uso da API do GitHub para todos os repositórios do GitHub e clona o repositório como faria com qualquer outro repositório. "
+                }
+                " formato de arquivo " : {
+                    " type " : " string " ,
+                    " description " : " O formato de arquivamento padrão quando não é fornecido no CLI, o padrão é \" tar \ " . "
+                }
+                " archive-dir " : {
+                    " type " : " string " ,
+                    " description " : " O caminho padrão do archive, quando não fornecido no CLI, o padrão é \" . \ " . "
+                }
+                " htaccess-protect " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é true. Se definido como false, o Composer não criará arquivos .htaccess nos diretórios home, cache e dados do compositor. "
+                }
+                " sort-packages " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é false. Se definido como true, o Composer classificará os pacotes ao adicionar / atualizar uma nova dependência. "
+                }
+                " lock " : {
+                    " type " : " boolean " ,
+                    " description " : "O padrão é true. Se definido como false, o Composer não criará um arquivo composer.lock. "
+                }
+            }
+        }
+        " extra " : {
+            " type " : [ " object " , " array " ],
+            " description " : " Dados extras arbitrários que podem ser usados ??por plug-ins, por exemplo, pacote do tipo compositor-plugin podem ter uma chave 'class' definindo um nome de classe do instalador. " ,
+            " additionalProperties " : true
+        }
+        " carregamento automático " : {
+            " $ ref " : " # / definições / carregamento automático "
+        }
+        " autoload-dev " : {
+            " type " : " object " ,
+            " description " : " Descrição de regras adicionais de carregamento automático para fins de desenvolvimento (por exemplo, um conjunto de testes). " ,
+            " properties " : {
+                " psr-0 " : {
+                    " type " : " object " ,
+                    " description " : " Este é um hash de namespaces (chaves) e os diretórios em que eles podem ser encontrados (valores, podem ser matrizes de caminhos) pelo autoloader. " ,
+                    " additionalProperties " : {
+                        " type " : [ " string " , " array " ],
+                        " items " : {
+                            " type " : " string "
+                        }
+                    }
+                }
+                " psr-4 " : {
+                    " type " : " object " ,
+                    " description " : " Este é um hash de namespaces (chaves) e os diretórios PSR-4 para os quais eles podem mapear (valores, podem ser matrizes de caminhos) pelo autoloader. " ,
+                    " additionalProperties " : {
+                        " type " : [ " string " , " array " ],
+                        " items " : {
+                            " type " : " string "
+                        }
+                    }
+                }
+                " mapa de classe " : {
+                    " type " : " array " ,
+                    " description " : " Esta é uma matriz de diretórios que contêm classes a serem incluídas no processo de geração do mapa de classes. "
+                }
+                " arquivos " : {
+                    " type " : " array " ,
+                    " description " : " Este é um conjunto de arquivos que são sempre necessários em todas as solicitações. "
+                }
+            }
+        }
+        " arquivo " : {
+            " type " : [ " object " ],
+            " description " : " Opções para criar arquivos compactados para distribuição. " ,
+            " properties " : {
+                " excluir " : {
+                    " type " : " array " ,
+                    " description " : " Uma lista de padrões para os caminhos a serem excluídos ou incluídos se prefixados com um ponto de exclamação. "
+                }
+            }
+        }
+        " repositórios " : {
+            " type " : [ " object " , " array " ],
+            " description " : " Um conjunto de repositórios adicionais onde os pacotes podem ser encontrados. " ,
+            " additionalProperties " : {
+                " oneOf " : [
+                    { " $ ref " : " # / settings / repository " },
+                    { " type " : " boolean " , " enum " : [ false ]}
+                ]
+            }
+            " items " : {
+                " oneOf " : [
+                    { " $ ref " : " # / settings / repository " },
+                    {
+                        " type " : " object " ,
+                        " AdditionalProperties " : { " type " : " boolean " , " enum " : [ false ]},
+                        " minProperties " : 1 ,
+                        " maxProperties " : 1
+                    }
+                ]
+            }
+        }
+        " estabilidade mínima " : {
+            " type " : [ " string " ],
+            " description " : " A estabilidade mínima que os pacotes devem ter para poder ser instalada. Os valores possíveis são: dev, alpha, beta, RC, stable. " ,
+            " pattern " : " ^ dev | alpha | beta | rc | RC | stable $ "
+        }
+        " prefere estável " : {
+            " type " : [ " boolean " ],
+            " description " : " Se definido como true, os pacotes estáveis ??serão preferidos aos pacotes dev, quando possível, mesmo que a estabilidade mínima permita pacotes instáveis. "
+        }
+        " bin " : {
+            " type " : [ " string " , " array " ],
+            " description " : " Um conjunto de arquivos, ou um único arquivo, que deve ser tratado como binários e vinculado ao bin-dir (da configuração). " ,
+            " items " : {
+                " type " : " string "
+            }
+        }
+        " include-path " : {
+            " type " : [ " array " ],
+            " description " : " DEPRECATED: Uma lista de diretórios que devem ser adicionados ao caminho de inclusão do PHP. Isso está presente apenas para dar suporte a projetos legados, e todo novo código deve preferencialmente usar o carregamento automático. " ,
+            " items " : {
+                " type " : " string "
+            }
+        }
+        " scripts " : {
+            " type " : [ " object " ],
+            " description " : " Ouvintes de script que serão executados antes / depois de alguns eventos. " ,
+            " properties " : {
+                " pré-instalação-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes que o comando install seja executado, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " post-install-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a execução do comando install, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " pré-atualização-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes que o comando update seja executado, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " pós-atualização-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a execução do comando update, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " pre-status-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes que o comando status seja executado, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " post-status-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre depois que o comando status é executado, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " pré-instalação do pacote " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes da instalação de um pacote, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " pós-instalação do pacote " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a instalação de um pacote, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " atualização pré-pacote " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes da atualização de um pacote, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+                " post-package-update " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a atualização de um pacote, contém um ou mais callables Class :: method ou comandos de shell. "
+                }
+                " desinstalação pré-pacote " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes da desinstalação de um pacote, contém um ou mais callables Class :: method ou comandos de shell. "
+                }
+                " desinstalação pós-pacote " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a desinstalação de um pacote, contém um ou mais callables Class :: method ou comandos de shell. "
+                }
+                " pré-carregamento automático-dump " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre antes que o autoloader seja despejado, contém um ou mais callables Class :: method ou comandos de shell. "
+                }
+                " post-autoload-dump " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre depois que o carregador automático é despejado, contém um ou mais códigos de chamada de classe :: método ou comandos de shell. "
+                }
+                " post-root-package-install " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a instalação do pacote raiz, contém um ou mais callables Class :: method ou comandos de shell. "
+                }
+                " post-create-project-cmd " : {
+                    " type " : [ " array " , " string " ],
+                    " description " : " Ocorre após a execução do comando create-project, contém um ou mais callables Class :: method ou comandos shell. "
+                }
+            }
+        }
+        " scripts-descrições " : {
+            " type " : [ " object " ],
+            " description " : " Descrições para comandos personalizados, mostradas na ajuda do console. " ,
+            " additionalProperties " : {
+                " type " : " string "
+            }
+        }
+        " suporte " : {
+            " type " : " object " ,
+            " properties " : {
+                " email " : {
+                    " type " : " string " ,
+                    " description " : " Endereço de e-mail para suporte. " ,
+                    " format " : " email "
+                }
+                " questões " : {
+                    " type " : " string " ,
+                    " description " : " URL para o rastreador de problemas. " ,
+                    " formato " : " uri "
+                }
+                " fórum " : {
+                    " type " : " string " ,
+                    " description " : " URL do fórum. " ,
+                    " formato " : " uri "
+                }
+                " wiki " : {
+                    " type " : " string " ,
+                    " description " : " URL para o wiki. " ,
+                    " formato " : " uri "
+                }
+                " irc " : {
+                    " type " : " string " ,
+                    " description " : " Canal IRC para suporte, como irc: // server / channel. " ,
+                    " formato " : " uri "
+                }
+                " chat " : {
+                    " type " : " string " ,
+                    " description " : " URL do chat de suporte. " ,
+                    " formato " : " uri "
+                }
+                " fonte " : {
+                    " type " : " string " ,
+                    " description " : " URL para navegar ou baixar as fontes. " ,
+                    " formato " : " uri "
+                }
+                " docs " : {
+                    " type " : " string " ,
+                    " description " : " URL da documentação. " ,
+                    " formato " : " uri "
+                }
+                " rss " : {
+                    " type " : " string " ,
+                    " description " : " URL para o feed RSS. " ,
+                    " formato " : " uri "
+                }
+            }
+        }
+        " financiamento " : {
+            " type " : " array " ,
+            " description " : " Uma lista de opções para financiar o desenvolvimento e a manutenção do pacote. " ,
+            " items " : {
+                " type " : " object " ,
+                " properties " : {
+                    " type " : {
+                        " type " : " string " ,
+                        " description " : " Tipo de financiamento ou plataforma através da qual o financiamento é possível. "
+                    }
+                    " url " : {
+                        " type " : " string " ,
+                        " description " : " URL de um site com detalhes sobre financiamento e uma maneira de financiar o pacote. " ,
+                        " formato " : " uri "
+                    }
+                }
+            }
+        }
+        " ramos sem recurso " : {
+            " type " : [ " array " ],
+            " description " : " Um conjunto de padrões de sequência ou regex para nomes de ramificação não numéricos que não serão tratados como ramificações de recurso. " ,
+            " items " : {
+                " type " : " string "
+            }
+        }
+        " abandonado " : {
+            " type " : [ " boolean " , " string " ],
+            " description " : " Indica se este pacote foi abandonado, pode ser booleano ou um nome / URL do pacote apontando para uma alternativa recomendada. O padrão é false. "
+        }
+        " _comment " : {
+            " type " : [ " array " , " string " ],
+            " description " : " Uma chave para armazenar comentários em "
+        }
+    }
+    " definições " : {
+        " autores " : {
+            " type " : " array " ,
+            " description " : " Lista de autores que contribuíram para o pacote. Geralmente são os principais mantenedores, não a lista completa. " ,
+            " items " : {
+                " type " : " object " ,
+                " AdditionalProperties " : false ,
+                " obrigatório " : [ " nome " ],
+                " properties " : {
+                    " nome " : {
+                        " type " : " string " ,
+                        " description " : " Nome completo do autor. "
+                    }
+                    " email " : {
+                        " type " : " string " ,
+                        " description " : " Endereço de e-mail do autor. " ,
+                        " format " : " email "
+                    }
+                    " página inicial " : {
+                        " type " : " string " ,
+                        " description " : " URL da página inicial do autor. " ,
+                        " formato " : " uri "
+                    }
+                    " papel " : {
+                        " type " : " string " ,
+                        " description " : " Papel do autor no projeto. "
+                    }
+                }
+            }
+        }
+        " carregamento automático " : {
+            " type " : " object " ,
+            " description " : " Descrição de como o pacote pode ser carregado automaticamente. " ,
+            " properties " : {
+                " psr-0 " : {
+                    " type " : " object " ,
+                    " description " : " Este é um hash de namespaces (chaves) e os diretórios em que eles podem ser encontrados (valores, podem ser matrizes de caminhos) pelo autoloader. " ,
+                    " additionalProperties " : {
+                        " type " : [ " string " , " array " ],
+                        " items " : {
+                            " type " : " string "
+                        }
+                    }
+                }
+                " psr-4 " : {
+                    " type " : " object " ,
+                    " description " : " Este é um hash de namespaces (chaves) e os diretórios PSR-4 para os quais eles podem mapear (valores, podem ser matrizes de caminhos) pelo autoloader. " ,
+                    " additionalProperties " : {
+                        " type " : [ " string " , " array " ],
+                        " items " : {
+                            " type " : " string "
+                        }
+                    }
+                }
+                " mapa de classe " : {
+                    " type " : " array " ,
+                    " description " : " Esta é uma matriz de diretórios que contêm classes a serem incluídas no processo de geração do mapa de classes. "
+                }
+                " arquivos " : {
+                    " type " : " array " ,
+                    " description " : " Este é um conjunto de arquivos que são sempre necessários em todas as solicitações. "
+                }
+                " excluir do mapa de classe " : {
+                    " type " : " array " ,
+                    " description " : " Esta é uma matriz de padrões a serem excluídos da geração de mapa de classe de carregamento automático. (por exemplo, \" excluir-de-mapa de classe \ " : [ \" / test / \ " , \" / tests / \ " , \" / Testes / \ " ] "
+                }
+            }
+        }
+        " repositório " : {
+            " type " : " object " ,
+            " oneOf " : [
+                { " $ ref " : " # / settings / compositor-repository " },
+                { " $ ref " : " # / settings / vcs-repository " },
+                { " $ ref " : " # / settings / path-repository " },
+                { " $ ref " : " # / settings / artifact-repository " },
+                { " $ ref " : " # / settings / pear-repository " },
+                { " $ ref " : " # / settings / package-repository " }
+            ]
+        }
+        " repositor-compositor " : {
+            " type " : " object " ,
+            " required " : [ " type " , " url " ],
+            " properties " : {
+                " type " : { " type " : " string " , " enum " : [ " compositor " ]},
+                " url " : { " type " : " string " },
+                " opções " : {
+                    " type " : " object " ,
+                    " additionalProperties " : true
+                }
+                " allow_ssl_downgrade " : { " type " : " boolean " },
+                " force-lazy-provider " : { " type " : " boolean " }
+            }
+        }
+        " vcs-repository " : {
+            " type " : " object " ,
+            " required " : [ " type " , " url " ],
+            " properties " : {
+                " type " : { " type " : " string " , " enum " : [ " vcs " , " github " , " git " , " gitlab " , " git-bitbucket " , " hg " , " hg-bitbucket " , " fóssil " , " forçosamente ", " svn "]},
+                " url " : { " type " : " string " },
+                " no-api " : { " type " : " boolean " },
+                " secure-http " : { " type " : " boolean " },
+                " svn-cache-credentials " : { " type " : " boolean " },
+                " caminho do tronco " : { " type " : [ " string " , " boolean " ]},
+                " branches-path " : { " type " : [ " string " , " boolean " ]},
+                " tags-path " : { " type " : [ " string " , " boolean " ]},
+                " caminho do pacote " : { " type " : " string " },
+                " depósito " : { " type " : " string " },
+                " branch " : { " type " : " string " },
+                " unique_perforce_client_name " : { " type " : " string " },
+                " p4user " : { " type " : " string " },
+                " p4password " : { " type " : " string " }
+            }
+        }
+        " caminho-repositório " : {
+            " type " : " object " ,
+            " required " : [ " type " , " url " ],
+            " properties " : {
+                " type " : { " type " : " string " , " enum " : [ " path " ]},
+                " url " : { " type " : " string " },
+                " opções " : {
+                    " type " : " object " ,
+                    " properties " : {
+                        " link simbólico " : { " type " : [ " booleano " , " nulo " ]}
+                    }
+                    " additionalProperties " : true
+                }
+            }
+        }
+        " repositório de artefatos " : {
+            " type " : " object " ,
+            " required " : [ " type " , " url " ],
+            " properties " : {
+                " type " : { " type " : " string " , " enum " : [ " artefato " ]},
+                " url " : { " type " : " string " }
+            }
+        }
+        " repositório de pera " : {
+            " type " : " object " ,
+            " required " : [ " type " , " url " ],
+            " properties " : {
+                " type " : { " type " : " string " , " enum " : [ " pear " ]},
+                " url " : { " type " : " string " },
+                " vendor-alias " : { " type " : " string " }
+            }
+        }
+        " repositório de pacotes " : {
+            " type " : " object " ,
+            " required " : [ " type " , " package " ],
+            " properties " : {
+                " type " : { " type " : " string " , " enum " : [ " package " ]},
+                " pacote " : {
+                    " oneOf " : [
+                        { " $ ref " : " # / definition / inline-package " },
+                        {
+                            " type " : " array " ,
+                            " items " : { " $ ref " : " # / definition / inline-package " }
+                        }
+                    ]
+                }
+            }
+        }
+        " pacote embutido " : {
+            " type " : " object " ,
+            " required " : [ " name " , " version " ],
+            " properties " : {
+                " nome " : {
+                    " type " : " string " ,
+                    " description " : " Nome do pacote, incluindo o prefixo 'vendor-name /'. "
+                }
+                " type " : {
+                    " type " : " string "
+                }
+                " target-dir " : {
+                    " description " : " DEPRECATED: Força o pacote a ser instalado no caminho do subdiretório especificado. É usado para carregar automaticamente os pacotes PSR-0 que não contêm o caminho completo. Use barras para compatibilidade entre plataformas. " ,
+                    " type " : " string "
+                }
+                " description " : {
+                    " type " : " string "
+                }
+                " keywords " : {
+                    " type " : " array " ,
+                    " items " : {
+                        " type " : " string "
+                    }
+                }
+                " página inicial " : {
+                    " type " : " string " ,
+                    " formato " : " uri "
+                }
+                " version " : {
+                    " type " : " string "
+                }
+                " time " : {
+                    " type " : " string "
+                }
+                " licença " : {
+                    " type " : [
+                        " string " ,
+                        " matriz "
+                    ]
+                }
+                " autores " : {
+                    " $ ref " : " # / definições / autores "
+                }
+                " require " : {
+                    " type " : " object " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " substituir " : {
+                    " type " : " object " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " conflito " : {
+                    " type " : " object " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " forneça " : {
+                    " type " : " object " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " require-dev " : {
+                    " type " : " object " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " sugerir " : {
+                    " type " : " object " ,
+                    " additionalProperties " : {
+                        " type " : " string "
+                    }
+                }
+                " extra " : {
+                    " type " : [ " object " , " array " ],
+                    " additionalProperties " : true
+                }
+                " carregamento automático " : {
+                    " $ ref " : " # / definições / carregamento automático "
+                }
+                " arquivo " : {
+                    " type " : [ " object " ],
+                    " properties " : {
+                        " excluir " : {
+                            " type " : " array "
+                        }
+                    }
+                }
+                " bin " : {
+                    " type " : [ " string " , " array " ],
+                    " description " : " Um conjunto de arquivos, ou um único arquivo, que deve ser tratado como binários e vinculado ao bin-dir (da configuração). " ,
+                    " items " : {
+                        " type " : " string "
+                    }
+                }
+                " include-path " : {
+                    " type " : [ " array " ],
+                    " description " : " DEPRECATED: Uma lista de diretórios que devem ser adicionados ao caminho de inclusão do PHP. Isso está presente apenas para dar suporte a projetos legados, e todo novo código deve preferencialmente usar o carregamento automático. " ,
+                    " items " : {
+                        " type " : " string "
+                    }
+                }
+                " fonte " : {
+                    " type " : " object " ,
+                    " required " : [ " type " , " url " , " reference " ],
+                    " properties " : {
+                        " type " : {
+                            " type " : " string "
+                        }
+                        " url " : {
+                            " type " : " string "
+                        }
+                        " referência " : {
+                            " type " : " string "
+                        }
+                        " espelhos " : {
+                            " type " : " array "
+                        }
+                    }
+                }
+                " dist " : {
+                    " type " : " object " ,
+                    " required " : [ " type " , " url " ],
+                    " properties " : {
+                        " type " : {
+                            " type " : " string "
+                        }
+                        " url " : {
+                            " type " : " string "
+                        }
+                        " referência " : {
+                            " type " : " string "
+                        }
+                        " shasum " : {
+                            " type " : " string "
+                        }
+                        " espelhos " : {
+                            " type " : " array "
+                        }
+                    }
+                }
+            }
+            " additionalProperties " : true
+        }
+    }
+}
